@@ -1,25 +1,17 @@
-import { useQuery } from "react-query"
-import axios from 'axios'
-export const RQSuperHeroesPage = () => {
-  const onSuccess=()=>{
-    console.log('success')
-  }
-  const onEchec=()=>{
-    console.log('success')
-  }
+import { Link } from "react-router-dom";
+import useSuperHeroData from "../hooks/useSuperHeroesData";
 
-  const {data,isError,error,isLoading,isFetching,refetch} =useQuery('rq-super',()=>{
-    return axios.get('http://localhost:4000/superheroes') 
-   },{
-    //  cacheTime:
-    // staleTime
-    //  refetchOnMount:'always',
-    //  refetchOnWindowFocus:'true'
-    enabled:false,
-    onSuccess:onSuccess,
-    onError:onEchec
-   }
-   )
+
+export const RQSuperHeroesPage = () => {
+  const onSuccess=(data)=>{
+    console.log('success',data)
+  }
+  const onEchec=(err)=>{
+    console.log('success',err)
+  }
+  
+  const {data,isError,error,isLoading,isFetching,refetch}=useSuperHeroData(onSuccess,onEchec)
+  // 
   
    if(isLoading || isFetching) return <h4>... Loading</h4>
 
@@ -33,7 +25,12 @@ export const RQSuperHeroesPage = () => {
     <button onClick={refetch}>Fetch</button>
 
     {data && <ul>
-      {data.data.map(item=><li key={item.id}>{item.name}</li>)}
+      {data.data.map(item=>
+      <Link to={`/super-heroes/${item.id}`} key={item.id}>
+      <li >{item.name}</li>
+      </Link>
+      )
+      }
       </ul>}
     </div>
   )

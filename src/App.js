@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import './App.css'
 import { HomePage } from './components/Home.page'
 import { RQSuperHeroesPage } from './components/RQSuperHeroes.page'
+import {RQSuperHeroPage, } from './components/RQSuperHero.page'
 import { SuperHeroesPage } from './components/SuperHeroes.page'
 
 function App() {
@@ -22,8 +23,11 @@ function App() {
           </ul>
         </nav>
         <Switch>
-          <Route path='/super-heroes'>
+          <Route exact path='/super-heroes'>
             <SuperHeroesPage />
+          </Route>
+          <Route exact path='/super-heroes/:heroId'>
+            <RQSuperHeroPage />
           </Route>
           <Route path='/rq-super-heroes'>
             <RQSuperHeroesPage />
